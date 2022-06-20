@@ -1,4 +1,4 @@
-package calumny;
+package hydrica;
 import java.util.Random;
 public class BitsWithProbability {
   public BitsWithProbability(float prob, Random rnd) {

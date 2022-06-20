@@ -1,6 +1,6 @@
-package calumny;
-import calumny.BitsWithProbability;
-import calumny.MersenneTwisterRNG;
+package hydrica;
+import hydrica.BitsWithProbability;
+import hydrica.MersenneTwisterRNG;
 
 public final class GenCave {
   // thanks to http://onjava.com/onjava/2005/02/02/examples/bits_article.java
