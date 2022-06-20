@@ -47,7 +47,7 @@ import java.util.Random;
 public class MersenneTwisterRNG extends Random {
   // The actual seed size isn't that important, but it should be a multiple
   // of 4.
-  private static final int SEED_SIZE_BYTES = 16;
+  private static final int SEED_SIZE_INTS = 4;
 
   // Magic numbers from original C version.
   private static final int N = 624;
@@ -72,7 +72,7 @@ public class MersenneTwisterRNG extends Random {
    * @param seed The seed data used to initialise the RNG.
    */
   public MersenneTwisterRNG(int[] seed) {
-    if (seed == null || seed.length != SEED_SIZE_BYTES) {
+    if (seed == null || seed.length != SEED_SIZE_INTS) {
       throw new IllegalArgumentException(
           "Mersenne Twister RNG requires a 128-bit (16-byte) seed.");
     }
