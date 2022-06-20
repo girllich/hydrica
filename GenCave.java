@@ -1,6 +1,6 @@
 package calumny;
-//import toxi.math.noise.*;
-import org.uncommons.maths.random.*;
+import calumny.BitsWithProbability;
+import calumny.MersenneTwisterRNG;
 
 public final class GenCave {
     //thanks to http://onjava.com/onjava/2005/02/02/examples/bits_article.java
@@ -35,11 +35,11 @@ public final class GenCave {
    // 	public static ByteBuffer bb=ByteBuffer.wrap(new byte[16]);
     	public static java.util.Random getRandom(int x,int y,int z)
     	{	
-    		ByteBuffer bb=ByteBuffer.wrap(new byte[16]);
-    		bb.putInt(0,x);
-    		bb.putInt(4,y);
-    		bb.putInt(8,z);
-    		return new MersenneTwisterRNG(bb.array());
+		int[] bb= new int[4];
+		bb[0] = x;
+		bb[1] = y;
+		bb[2] = z;
+    		return new MersenneTwisterRNG(bb);
     		//return new AESCounterRNG(bb.array());
      	}
     //}
@@ -48,7 +48,6 @@ public final class GenCave {
     public static final class noisegenimpl implements noisegen {
     	public int offsetx,offsety,offsetz;
     	public float density;
-    	public ByteBuffer bb=ByteBuffer.allocate(4*3);
     	public noisegenimpl(int offsetx,int offsety, int offsetz)
     	{
     		this.offsetx=offsetx; this.offsety=offsety; this.offsetz=offsetz;
