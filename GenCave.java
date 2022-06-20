@@ -1,12 +1,6 @@
 package calumny;
-import toxi.math.noise.*;
+//import toxi.math.noise.*;
 import org.uncommons.maths.random.*;
-
-import java.io.IOException;
-import java.nio.ByteBuffer;
-import toxi.geom.mesh.*;
-import toxi.geom.*;
-import toxi.volume.*;
 
 public final class GenCave {
     //thanks to http://onjava.com/onjava/2005/02/02/examples/bits_article.java
@@ -52,10 +46,6 @@ public final class GenCave {
     //public static final randomgen rgen=new randomgen();
     
     public static final class noisegenimpl implements noisegen {
-    	public static PerlinNoise pn=new PerlinNoise();
-    	static {
-    		pn.noiseSeed(0);
-    	}
     	public int offsetx,offsety,offsetz;
     	public float density;
     	public ByteBuffer bb=ByteBuffer.allocate(4*3);
@@ -71,7 +61,7 @@ public final class GenCave {
     		return new BitsWithProbability(this.density,GenCave.getRandom(x+offsetx, y+offsety, z+offsetz)).nextLong();
     	}
     }
-    public final VolumetricSpaceArray vs;
+
 	//public GenCave(int x, int y)
     //{
 	//	board = new long[2][x][y];
@@ -83,7 +73,6 @@ public final class GenCave {
 		this.inset=(z-1)*2+2;
 		this.returnx=(x-2)*8-this.inset;
 		this.returny=(y-2)*8-this.inset;
-	    vs=new VolumetricSpaceArray(new Vec3D(1,1,1),returnx,returny,z); 
 		board = new long[z][x][y];
     }
 	public void initnoise2(int level,noisegen r) 
@@ -288,7 +277,7 @@ public final class GenCave {
 	    //bitprint(0);
     }
    
-    public final LaplacianSmooth sm=new LaplacianSmooth();
+
     public void cave3d(int x, int y, int z)
     {
     	noisegen g=new noisegenimpl(x>>3,y>>3,z); //z is leveled differently
@@ -335,54 +324,7 @@ public final class GenCave {
 	    
 	    //return null;
     }
-    public void outputvertices(java.io.OutputStream stream, boolean normals)
-    {
-    	try {
-    		dupmatrix(this.vs.getData(),20);
-    		//this.vs.closeSides();
-    	    //System.err.println("lastresultdata:"+board[4][1][1]);
-    		ArrayIsoSurface iso=new ArrayIsoSurface(this.vs);
-    		WETriangleMesh we=new WETriangleMesh();
-    		//iso.computeSurfaceMesh(null, 0.5f);
-    		WETriangleMesh we2=(WETriangleMesh) iso.computeSurfaceMesh(we,0.5f);
-    		//we2.computeVertexNormals();
-    		sm.filter(we2,1);
-    		//we2.saveAsOBJ("/tmp/c.obj");
-    		//if(true)
-    		//{
-    		float[] f;
-    		if(!normals)    		
-    			f=we2.getMeshAsVertexArray(null,0,3);
-    		else
-    		{
-    			//we2.computeVertexNormals();
-    			f=we2.getVertexNormalsAsArray(we2.getMeshAsVertexArray(null,0,6),3,6);
-    		}
 
-    		java.io.DataOutputStream d=new java.io.DataOutputStream(stream);
-    		//System.err.print("First three floats are"+f[0]+","+f[1]+","+f[2]);
-    		for(int i=0;i<f.length;i++)
-    		{
-    			//System.err.print((int) ((f[i]+0.5f)*256.0f));
-    			if((i%6)>2)
-    			  d.write( (int) ((f[i]+1.0f)*128.0f));
-    			//else
-    			//if(Math.abs(f[i])>0.5) System.err.println("Error"+f[i]);
-    			else
-    			d.write( (int) ((f[i]+0.5f)*256.0f) );
-    		}
-    		//} else { 
-    		//	we2.saveAsOBJ(stream);
-    			
-    		//}
-    	} catch (IOException e) 
-    	{ 
-    		e.printStackTrace(); 
-    	}
-    	//ByteBuffer g=ByteBuffer.wrap(new byte[f.length*4]);
-    	//g.asFloatBuffer().put(f);
-    	//return g.array();
-    }
     public void printint()
     {
     	System.out.println("BEGIN");

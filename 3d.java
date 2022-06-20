@@ -1,5 +1,17 @@
 package calumny;
+import toxi.geom.mesh.*;
+import toxi.geom.*;
+import toxi.volume.*;
+import java.io.IOException;
+import java.nio.ByteBuffer;
 
+
+public final class 3d {
+    public final VolumetricSpaceArray vs;
+    public setup(int returnx, int returny, int z) {
+	vs=new VolumetricSpaceArray(new Vec3D(1,1,1),returnx,returny,z); 
+    }
+    public final LaplacianSmooth sm=new LaplacianSmooth();
     {
     	try {
     		dupmatrix(this.vs.getData(),20);
@@ -47,3 +59,4 @@ package calumny;
     	//g.asFloatBuffer().put(f);
     	//return g.array();
     }
+}
