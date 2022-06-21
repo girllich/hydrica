@@ -149,4 +149,9 @@ public class MersenneTwisterRNG extends Random {
 
     return y >>> (32 - bits);
   }
+
+    public static void main(String[] args) {
+	MersenneTwisterRNG mer = new MersenneTwisterRNG(new int[]{ 1,2,3,4});
+	System.out.println(mer.next(32));
+    }
 }
